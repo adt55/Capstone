@@ -20,29 +20,28 @@ public class permission_info extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        Bundle extras = getIntent().getExtras();
+        String appName = "";
 
+        if (extras != null) {
+            appName = extras.getString("appName");
+            // and get whatever type user account id is
+        }
+        setContentView(R.layout.permission_info);
+        StringBuilder builder = new StringBuilder();
         textView = findViewById(R.id.text_view);
-        packageManager = getPackageManager();
-
-        List<PackageInfo> packageList = packageManager.getInstalledPackages(PackageManager.GET_PERMISSIONS);
-
-        permissions = new ArrayList<>();
-
-        for (PackageInfo packageInfo : packageList) {
-            if ((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
-                String[] requestedPermissions = packageInfo.requestedPermissions;
-                if (requestedPermissions != null) {
-                    for (String permission : requestedPermissions) {
-                        permissions.add(permission);
-                    }
+        PackageManager pm = getPackageManager();
+        try {
+            PackageInfo packageInfo = pm.getPackageInfo(appName, PackageManager.GET_PERMISSIONS);
+            String[] permissions = packageInfo.requestedPermissions;
+            if (permissions != null) {
+                for (String permission : permissions) {
+                    //Log.d("Permission: ", permission);
+                    builder.append(permission + "\n");
                 }
             }
-        }
-
-        StringBuilder builder = new StringBuilder();
-        for (String permission : permissions) {
-            builder.append(permission + "\n");
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
         }
 
         textView.setText(builder.toString());
