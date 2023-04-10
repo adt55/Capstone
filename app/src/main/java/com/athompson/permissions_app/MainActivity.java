@@ -7,6 +7,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -30,9 +31,12 @@ public class MainActivity extends AppCompatActivity {
 
         ListView listView = findViewById(R.id.list_view);
         ArrayList<String> appNames = new ArrayList<>();
+        ArrayList<String> appClassNames = new ArrayList<>();
         List<ApplicationInfo> apps = getInstalledApps();
         for (ApplicationInfo app : apps) {
             appNames.add(getPackageManager().getApplicationLabel(app).toString());
+            appClassNames.add(app.taskAffinity);
+
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, appNames);
         listView.setAdapter(adapter);
@@ -40,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent appInfo = new Intent(MainActivity.this, permission_info.class);
-                appInfo.putExtra("appName", listView.getItemAtPosition(i).toString()); //Optional parameters
+                //appInfo.putExtra("appName", listView.getItemAtPosition(i).toString()); //Optional parameters
+                appInfo.putExtra("appName", appClassNames.get(i)); //Optional parameters
+                Log.d("appName", appClassNames.get(i));
                 startActivity(appInfo);
             }
         });
