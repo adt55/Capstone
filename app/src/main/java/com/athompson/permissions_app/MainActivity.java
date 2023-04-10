@@ -19,7 +19,9 @@ import android.widget.SearchView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener  {
+    SearchView searchView;
+    ArrayAdapter<String> adapter;
     public List<ApplicationInfo> getInstalledApps() {
         PackageManager packageManager = getPackageManager();
         return packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        SearchView searchView = findViewById(R.id.search_view);
         ListView listView = findViewById(R.id.list_view);
         ArrayList<String> appNames = new ArrayList<>();
         ArrayList<String> appClassNames = new ArrayList<>();
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             appClassNames.add(app.taskAffinity);
 
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, appNames);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, appNames);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -50,16 +52,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(appInfo);
             }
         });
-
-        Button button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, permission_info.class);
+        searchView.setOnQueryTextListener(this);
 
 
-                startActivity(intent);
-            }
-        });
+ ;
+    }
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        String text = newText;
+        adapter.getFilter().filter(newText);
+        return false;
     }
 }
