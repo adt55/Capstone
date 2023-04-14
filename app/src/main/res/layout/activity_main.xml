@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:iconifiedByDefault="false"
             android:orientation="vertical"
-            android:queryHint="Search here..." >
+            android:queryHint="Search apps here..." >
 
         </SearchView>
 

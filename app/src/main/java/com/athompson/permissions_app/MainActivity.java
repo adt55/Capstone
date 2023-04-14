@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
 
  ;
+
     }
     @Override
     public boolean onQueryTextSubmit(String query) {
@@ -69,4 +70,5 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         adapter.getFilter().filter(newText);
         return false;
     }
+
 }

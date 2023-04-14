@@ -7,6 +7,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.ListView;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class permission_info extends AppCompatActivity {
             if (permissions != null) {
                 for (String permission : permissions) {
                     //Log.d("Permission: ", permission);
-                    builder.append(permission + "\n");
+                    builder.append("• " +permission + "\n");
                 }
             }
         } catch (PackageManager.NameNotFoundException e) {
