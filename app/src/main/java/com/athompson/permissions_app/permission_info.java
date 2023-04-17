@@ -3,6 +3,7 @@ package com.athompson.permissions_app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -41,6 +42,10 @@ public class permission_info extends AppCompatActivity {
                     builder.append("• " +permission + "\n");
                 }
             }
+
+            ApplicationInfo aInfo = pm.getApplicationInfo(packageInfo.packageName, PackageManager.GET_META_DATA);
+            builder.append("• App Info:\n");
+            builder.append("• " + aInfo.packageName + "\n");
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
