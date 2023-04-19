@@ -44,8 +44,16 @@ public class permission_info extends AppCompatActivity {
             }
 
             ApplicationInfo aInfo = pm.getApplicationInfo(packageInfo.packageName, PackageManager.GET_META_DATA);
-            builder.append("• App Info:\n");
+            builder.append("App Info:\n");
             builder.append("• " + aInfo.packageName + "\n");
+            builder.append("• " + aInfo.logo + "\n");
+            builder.append("• " + aInfo.deviceProtectedDataDir + "\n");
+            builder.append("• " + aInfo.publicSourceDir + "\n");
+            builder.append("• " + aInfo.enabled + "\n");
+            builder.append("• " + aInfo.metaData + "\n");
+            builder.append("• " + aInfo.descriptionRes + "\n");
+            builder.append("• " + aInfo.taskAffinity + "\n");
+            builder.append("• " + aInfo.permission + "\n");
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
